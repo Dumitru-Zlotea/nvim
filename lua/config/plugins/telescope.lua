@@ -12,12 +12,23 @@ return {
           find_files = {
             theme = "ivy"
           }
+        },
+        extensions = {
+          fzf = {}
         }
       }
-      vim.keymap.set("n", "<space>fd", require('telescope.builtin').find_files)
-      vim.keymap.set("n", "<space>fh", require('telescope.builtin').help_tags)
+
+      require('telescope').load_extension('fzf')
+
+      vim.keymap.set("n", "<leader>ff", require('telescope.builtin').find_files)
+      vim.keymap.set("n", "<leader>fh", require('telescope.builtin').help_tags)
+      vim.keymap.set("n", "<leader>fpk", function()
+        require('telescope.builtin').find_files {
+          cwd = vim.fn.stdpath("config")
+        }
+      end)
+
+      require "config/telescope/multigrep".setup {}
     end
   }
 }
-
--- telescope.nvim introduction 1:20
